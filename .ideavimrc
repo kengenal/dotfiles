@@ -1,0 +1,76 @@
+"" Source your .vimrc
+"source ~/.vimrc
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+" Do incremental searching.
+" Don't use Ex mode, use Q for formatting.
+let mapleader = " "
+map Q gq
+vmap <leader>y "+y
+nmap <leader>y "+yy
+
+set number
+set rnu
+
+"" w dół i do góry scroll + centrowanie
+nnoremap <C-d> <C-d>zz
+nnoremap <C-u> <C-u>zz
+
+"" łatwiejsze switchowanie tabów
+map <C-L> gt
+map <C-H> gT
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
+set NERDTree
+map <C-m> :NERDTree<CR>
+
+" Find more examples here: https://jb.gg/share-ideavimrc
+" Set shift width to 4 spaces.
+set shiftwidth=4
+set tabstop=4
+set expandtab
+set nobackup
+set nowrap
+set incsearch
+set ignorecase
+set smartcase
+set hlsearch
+set NERDTree
+set nerdtree
+
+map <leader>n :NERDTreeToggle<CR>
+
+" Przesunięcie linii w trybie visual
+vmap J :m '>+1<CR>gv=gv
+vmap K :m '<-2<CR>gv=gv
+
+" Przejście do file explorer
+nmap <leader>pv :ProjectViewToggle<CR>
+
+nmap n nzzzv
+nmap N Nzzzv
+
+" Wyszukiwanie i zastępowanie zaznaczonego słowa
+nmap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
+
+" Pokaż drzewo projektu (odpowiednik NvimTreeToggle)
+nmap <C-n> :ProjectViewToggle<CR>
+
+" LSP (zakładając, że masz odpowiednie wsparcie LSP w PyCharmie)
+nmap gd :GotoDeclaration<CR>
+nmap gD :GotoDefinition<CR>
+nmap K :ShowDocumentation<CR>
+nmap gi :GotoImplementation<CR>
+nmap <leader>ca :CodeAction<CR>
+nmap <leader>rn :Rename<CR>
+
+Plug 'tpope/vim-surround'
