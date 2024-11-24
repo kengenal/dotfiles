@@ -1,20 +1,20 @@
-vim.keymap.set("n", "tn", function()
+vim.keymap.set("n", "<leader>tn", function()
     vim.cmd("TestNearest")
 end)
 
-vim.keymap.set("n", "tc", function()
+vim.keymap.set("n", "<leader>tc", function()
     vim.cmd("TestClass")
 end)
 
-vim.keymap.set("n", "tl", function()
+vim.keymap.set("n", "<leader>tl", function()
     vim.cmd("TestLast")
 end)
 
-vim.keymap.set("n", "tf", function()
+vim.keymap.set("n", "<leader>tf", function()
     vim.cmd("TestFile")
 end)
 
-vim.keymap.set("n", "ts", function()
+vim.keymap.set("n", "<leader>ts", function()
     vim.cmd("TestStratego")
 end)
 -- vim.cmd("let test#strategy = 'neovim_sticky'")

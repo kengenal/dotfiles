@@ -8,7 +8,7 @@ local config = wezterm.config_builder()
 -- For example, changing the color scheme:
 config.color_scheme = 'Gnometerm'
 config.font = wezterm.font("CaskaydiaCove Nerd Font", {weight="DemiBold", stretch="Normal", style="Normal"})
-config.window_background_image = wezterm.home_dir .. '/Pictures/wallpapers/skyline.jpg'
+config.window_background_image = wezterm.home_dir .. '/Pictures/wallpapers/894677.jpg'
 config.window_background_image_hsb = {
     -- Darken the background image by reducing it to 1/3rd
     brightness = 0.030,
