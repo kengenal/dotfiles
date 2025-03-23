@@ -4,7 +4,5 @@ if status is-interactive
     pyenv init - | source
     fzf --fish | source
     podman completion fish | source
+    fzf --fish | source
 end
-# bun
-set --export BUN_INSTALL "$HOME/.bun"
-set --export PATH $BUN_INSTALL/bin $PATH

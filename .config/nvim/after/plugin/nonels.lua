@@ -27,16 +27,17 @@ null_ls.setup({
         -- lua
         null_ls.builtins.formatting.stylua,
 
-        -- ruff_format(),
+        ruff_format(),
         null_ls.builtins.formatting.djlint,
-        null_ls.builtins.formatting.black,
+        -- null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.prettier,
 
         -- Spell check
         null_ls.builtins.completion.spell,
 
         null_ls.builtins.diagnostics.djlint,
-        -- CUSTOM
+        null_ls.builtins.diagnostics.codespell,
+        -- null_ls.builtins.diagnostics.pylint,
     },
 })
 

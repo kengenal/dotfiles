@@ -112,7 +112,15 @@ local plugins = {
             { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
         }
     },
-    { "tpope/vim-fugitive" },
+    {
+        "NeogitOrg/neogit",
+        dependencies = {
+            "nvim-lua/plenary.nvim",         -- required
+            "sindrets/diffview.nvim",        -- optional - Diff integration
+            "nvim-telescope/telescope.nvim", -- optional
+        },
+        config = true
+    },
     {
         "folke/trouble.nvim",
         opts = {}, -- for default options, refer to the configuration section for custom setup.
@@ -136,6 +144,20 @@ local plugins = {
             "nvim-neotest/nvim-nio",
             "theHamsta/nvim-dap-virtual-text",
         },
+    },
+    {
+        'stevearc/oil.nvim',
+        opts = {},
+        dependencies = { "nvim-tree/nvim-web-devicons" },
+        lazy = false,
+        config = function()
+            require("oil").setup({
+                default_file_explorer = false,
+                view_options = {
+                    show_hidden = true,
+                },
+            })
+        end
     },
 }
 local opts = {}

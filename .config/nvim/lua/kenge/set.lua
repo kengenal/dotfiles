@@ -29,3 +29,7 @@ vim.opt.clipboard = "unnamedplus"
 
 vim.opt.spelllang = 'en_us'
 vim.opt.spell = true
+vim.opt.mouse = ""
+vim.opt.pumblend = 0
+vim.opt.winblend = 0
+
