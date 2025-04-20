@@ -12,7 +12,6 @@ local function load_project_config_if_exists()
 end
 
 local function create_config()
-    local pth = vim.fn.expand('%:p') .. ".idea/projectconfig.lua"
     os.execute("mkdir " .. ".idea")
     local file = io.open(".idea/projectconfig.lua", "w")
     file:write([[
@@ -25,6 +24,16 @@ local python = ".venv/bin/python"
 
 
 require("lspconfig")["pyright"].setup {
+    on_attach = function(client, bufnr)
+        opts.buffer = bufnr
+        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
+        vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, opts)
+        vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, opts)
+    end,
     capabilities = (function()
         local capabilities = vim.lsp.protocol.make_client_capabilities()
         capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }

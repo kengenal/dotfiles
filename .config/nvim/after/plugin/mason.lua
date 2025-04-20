@@ -27,7 +27,6 @@ mason_lspconfig.setup({
         "lua_ls",
         "ts_ls",
         "ruff",
-        "codespell",
         "docker_compose_language_service",
         "dockerls",
         "htmx",
