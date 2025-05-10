@@ -31,6 +31,9 @@ lspconfig["ts_ls"].setup {
 lspconfig["pyright"].setup({
     on_attach = on_attach
 })
+lspconfig["terraformls"].setup({
+    on_attach = on_attach
+})
 -- configure lua server (with special settings)
 lspconfig["lua_ls"].setup({
     settings = { -- custom settings for lua
