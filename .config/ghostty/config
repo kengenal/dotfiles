@@ -1,0 +1,11 @@
+font-family=CaskaydiaCove Nerd Font
+font-style=Normal
+font-size=20
+background-opacity=0.9
+background=#000000
+macos-titlebar-style=tabs
+gtk-titlebar = false
+
+window-padding-balance = true
+window-padding-x = 10
+window-padding-y = 10
