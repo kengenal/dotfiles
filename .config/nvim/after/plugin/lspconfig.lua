@@ -27,9 +27,22 @@ lspconfig["ts_ls"].setup {
         "typescript.tsx",
     },
 }
+lspconfig["terraformls"].setup {
+    on_attach = on_attach
+}
 
 lspconfig["pyright"].setup({
-    on_attach = on_attach
+    on_attach = on_attach,
+    settings = {
+        pyright = {
+            -- Using Ruff's import organizer
+            disableOrganizeImports = true,
+        },
+        python = {
+            pythonPath = ".venv/bin/python",
+            analysis = { diagnosticMode = "off", typeCheckingMode = "off" },
+        },
+    },
 })
 lspconfig["terraformls"].setup({
     on_attach = on_attach
@@ -65,6 +78,7 @@ local servers = {
     "htmx",
     "ansiblels",
     "emmet_ls",
+    "bashls",
 }
 for _, lsp in pairs(servers) do
     require("lspconfig")[lsp].setup({
