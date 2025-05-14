@@ -5,6 +5,7 @@ background-opacity=0.9
 background=#000000
 macos-titlebar-style=tabs
 gtk-titlebar = false
+confirm-close-surface = false
 
 window-padding-balance = true
 window-padding-x = 10

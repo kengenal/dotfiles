@@ -6,12 +6,6 @@ if status is-interactive
     # podman completion fish | source
     fzf --fish | source
 
-    if not pgrep -x tmux > /dev/null
-        if tmux has-session 2>/dev/null
-            tmux attach-session -t $(tmux list-sessions -F '#{session_name}' | tail -n 1)
-        else
-            tmux
-        end
-    end
+    tmux
 
 end
