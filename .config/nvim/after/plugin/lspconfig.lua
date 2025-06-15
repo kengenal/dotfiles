@@ -34,46 +34,40 @@ vim.diagnostic.config({
 })
 
 
+local function get_python_path()
+    local venv_path = vim.fn.getcwd() .. "/.venv/bin/python"
+    if vim.fn.executable(venv_path) == 1 then
+        return venv_path
+    end
+    return vim.fn.exepath("python3")
+end
 
-lspconfig["ts_ls"].setup {
-    filetypes = {
-        "javascript",
-        "typescript",
-        "typescriptreact",
-        "typescript.tsx",
-    },
-}
-
-lspconfig["terraformls"].setup {
-    on_attach = on_attach
-}
-
-lspconfig["pyright"].setup({
+-- Server configurations
+lspconfig.pyright.setup({
     on_attach = on_attach,
     settings = {
         pyright = {
-            -- Using Ruff's import organizer
-            disableOrganizeImports = true,
+            disableOrganizeImports = true, -- Using isort via null-ls
         },
         python = {
-            pythonPath = ".venv/bin/python",
-            analysis = { diagnosticMode = "off", typeCheckingMode = "off" },
+            pythonPath = get_python_path(),
+            analysis = {
+                autoSearchPaths = true,
+                useLibraryCodeForTypes = true,
+                diagnosticMode = "openFilesOnly",
+            },
         },
     },
 })
-lspconfig["terraformls"].setup({
-    on_attach = on_attach
-})
--- configure lua server (with special settings)
-lspconfig["lua_ls"].setup({
-    settings = { -- custom settings for lua
+
+lspconfig.lua_ls.setup({
+    on_attach = on_attach,
+    settings = {
         Lua = {
-            -- make the language server recognize "vim" global
             diagnostics = {
                 globals = { "vim" },
             },
             workspace = {
-                -- make language server aware of runtime files
                 library = {
                     [vim.fn.expand("$VIMRUNTIME/lua")] = true,
                     [vim.fn.stdpath("config") .. "/lua"] = true,
@@ -83,27 +77,34 @@ lspconfig["lua_ls"].setup({
     },
 })
 
+lspconfig.rust_analyzer.setup({
+    on_attach = on_attach,
+})
 
-local servers = {
-    "rust_analyzer",
-    "tailwindcss",
-    "pyright",
-    "docker_compose_language_service",
-    "dockerls",
-    "htmx",
-    "ansiblels",
-    "emmet_ls",
-    "bashls",
-}
+lspconfig.tailwindcss.setup({
+    on_attach = on_attach,
+})
 
-for _, lsp in pairs(servers) do
-    require("lspconfig")[lsp].setup({
-        on_attach = on_attach,
-        flags = {
-            debounce_text_changes = 300,
-        },
-    })
-end
+lspconfig.docker_compose_language_service.setup({
+    on_attach = on_attach,
+})
 
+lspconfig.dockerls.setup({
+    on_attach = on_attach,
+})
 
-vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Pokaż błąd w dymku" })
+lspconfig.htmx.setup({
+    on_attach = on_attach,
+})
+
+lspconfig.ansiblels.setup({
+    on_attach = on_attach,
+})
+
+lspconfig.emmet_ls.setup({
+    on_attach = on_attach,
+})
+
+lspconfig.bashls.setup({
+    on_attach = on_attach,
+})
