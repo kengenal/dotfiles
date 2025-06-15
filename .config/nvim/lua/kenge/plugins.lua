@@ -12,7 +12,13 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    { "rose-pine/neovim",                       name = "rose-pine" },
+    -- { "rose-pine/neovim",                       name = "rose-pine" },
+    -- {"nyoom-engineering/oxocarbon.nvim"},
+    {
+        "webhooked/kanso.nvim",
+        lazy = false,
+        priority = 1000,
+    },
     {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.8",
@@ -69,7 +75,7 @@ local plugins = {
     "onsails/lspkind.nvim",
     "nvimtools/none-ls.nvim",
     --
-    { "lukas-reineke/indent-blankline.nvim",    main = "ibl",      opts = {} },
+    { "lukas-reineke/indent-blankline.nvim",    main = "ibl", opts = {} },
     { "nvim-telescope/telescope-ui-select.nvim" },
     {
         "ThePrimeagen/harpoon",

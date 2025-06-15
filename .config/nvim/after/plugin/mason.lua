@@ -25,7 +25,6 @@ mason_lspconfig.setup({
         "ruff",
         "pyright",
         "lua_ls",
-        "ts_ls",
         "ruff",
         "docker_compose_language_service",
         "dockerls",

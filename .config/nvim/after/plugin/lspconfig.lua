@@ -13,11 +13,27 @@ local on_attach = function(client, bufnr)
 end
 
 
-local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
-for type, icon in pairs(signs) do
-    local hl = "DiagnosticSign" .. type
-    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
-end
+vim.diagnostic.config({
+    signs = {
+        text = {
+            [vim.diagnostic.severity.ERROR] = "",
+            [vim.diagnostic.severity.WARN]  = "",
+            [vim.diagnostic.severity.HINT]  = "󰠠",
+            [vim.diagnostic.severity.INFO]  = "",
+        },
+    },
+    underline = false,
+    virtual_text = true,
+    update_in_insert = false,
+    severity_sort = true,
+    float = {
+        border = "rounded",
+        header = "",
+        prefix = "",
+    },
+})
+
+
 
 lspconfig["ts_ls"].setup {
     filetypes = {
@@ -27,6 +43,7 @@ lspconfig["ts_ls"].setup {
         "typescript.tsx",
     },
 }
+
 lspconfig["terraformls"].setup {
     on_attach = on_attach
 }
@@ -71,21 +88,22 @@ local servers = {
     "rust_analyzer",
     "tailwindcss",
     "pyright",
-    "ts_ls",
     "docker_compose_language_service",
     "dockerls",
-    "ruff",
     "htmx",
     "ansiblels",
     "emmet_ls",
     "bashls",
 }
+
 for _, lsp in pairs(servers) do
     require("lspconfig")[lsp].setup({
         on_attach = on_attach,
         flags = {
             debounce_text_changes = 300,
         },
-        -- capabilities = capabilities,
     })
 end
+
+
+vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Pokaż błąd w dymku" })
