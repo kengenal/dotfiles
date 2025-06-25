@@ -17,62 +17,36 @@ local function create_config()
     file:write([[
 -- django in docker
 -- python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5555 manage.py runserver 0.0.0.0:8000
-local dap = require("dap")
-local port = 5678
-local test_debug_port = 5555
-local python = ".venv/bin/python"
-
-
-require("lspconfig")["pyright"].setup {
-    on_attach = function(client, bufnr)
-        opts.buffer = bufnr
-        vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-        vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-        vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action)
-        vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, opts)
-        vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, opts)
-    end,
-    capabilities = (function()
-        local capabilities = vim.lsp.protocol.make_client_capabilities()
-        capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
-        return capabilities
-    end)(),
-    settings = {
-        pyright = {
-            -- Using Ruff's import organizer
-            disableOrganizeImports = true,
-        },
-        python = {
-            pythonPath = python,
-            analysis = { diagnosticMode = "off", typeCheckingMode = "off" },
-        },
-    },
-}
-
-require("lspconfig")["ruff"].setup {
-    settings = {
-        interpreter = python,
-    },
-}
-
 
 -- DOCKER
+local dap = require("dap")
 
-local runner = "test#python#pytest#executable"
-vim.g["test#python#runner"] = "pytest"
+local config = {
+    python = {
+        path = ".venv/bin/python",
+        debug_port = 5678,
+        test_debug_port = 5555,
+    },
+    docker = {
+        app = "api",
+        compose_file = "docker-compose.yml",
+        debug_entrypoint = {
+            "python", "-Xfrozen_modules=off", "-m", "debugpy",
+            "--listen", "0.0.0.0:5678", "--wait-for-client", "main.py"
+        },
+    },
+    test = {
+        runner = "pytest",
+    }
+}
 
--- python test runner type pytest, django
-local test_command = "docker compose exec api pytest"
-vim.g[runner] = test_command
-
--- FOR DOCKER
-local test_debug_exe =
-"docker compose exec api python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:".. test_debug_port .." -m pytest"
+-- DOCKER
+local runner = "test#python#" .. config.test.runner .. "#executable"
+vim.g["test#python#runner"] = config.test.runner
+vim.g[runner] = "docker compose exec " .. config.docker.app .. " " .. config.test.runner .. " --durations=1"
 
 dap.adapters.python = {
-    port = port,
+    port = config.python.debug_port,
     host = "127.0.0.1",
     type = 'server',
 }
@@ -81,23 +55,23 @@ dap.configurations.python = {
     {
         type = "python",
         connect = {
-            host = "127.0.0.1", -- adres debugpy
-            port = port,        -- port debugpy
+            host = "127.0.0.1",
+            port = config.python.debug_port,
         },
         request = "attach",
         justMyCode = false,
         console = "integratedTerminal",
         pathMappings = {
             {
-                localRoot = vim.fn.getcwd(),
-                remoteRoot = "/app",
+                localRoot = vim.fn.getcwd(), -- Ścieżka w Neovimie
+                remoteRoot = "/app",         -- Ścieżka na serwerze
             },
         },
     },
 }
 
 dap.listeners.after.event_initialized["docker_logs"] = function()
-    local logs_command = "docker logs z2-api-1 --follow"
+    local logs_command = "docker compose logs " .. config.docker.app .. " -f"
 
     vim.fn.jobstart(logs_command, {
         on_stdout = function(_, data)
@@ -108,11 +82,12 @@ dap.listeners.after.event_initialized["docker_logs"] = function()
     })
 end
 
-
 local function setup_debug_test()
-    dap.adapters.python.port = test_debug_port
-    dap.configurations.python[1].connect.port = test_debug_port
-    vim.g[runner] = test_debug_exe
+    dap.adapters.python.port = config.python.test_debug_port
+    dap.configurations.python[1].connect.port = config.python.test_debug_port
+    vim.g[runner] = "docker compose exec " .. config.docker.app ..
+        " python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:" ..
+        config.python.test_debug_port .. " -m " .. config.test.runner
 end
 
 vim.keymap.set("n", "dtn", function()
@@ -134,6 +109,31 @@ vim.keymap.set("n", "dtf", function()
     setup_debug_test()
     vim.cmd("TestFile")
 end)
+
+local function run_compose()
+    vim.system({
+        "docker", "compose", "-f", config.docker.compose_file,
+        "up", "-d", "--force-recreate", config.docker.app
+    })
+    vim.cmd("normal! <F7>")
+    vim.notify("Start app")
+end
+
+local function run_compose_debug()
+    vim.system({
+        "docker", "compose", "-f", config.docker.compose_file,
+        "run", "-d", "--rm",
+        "--entrypoint", table.concat(config.docker.debug_entrypoint, " "),
+        "-p", string.format("%d:%d", config.python.debug_port, config.python.debug_port),
+        config.docker.app
+    })
+
+    vim.cmd("Neotree close")
+    require("dap").continue()
+end
+
+vim.keymap.set("n", "<F5>", run_compose)
+vim.keymap.set("n", "<F6>", run_compose_debug)
 
 -- ENDDOCKER
 
@@ -206,7 +206,7 @@ end, {})
 load_project_config_if_exists()
 
 
-vim.keymap.set('n', '<F5>', function()
+vim.keymap.set('n', '<F7>', function()
   dofile('.idea/projectconfig.lua')
   vim.notify("Project config reloaded!")
 end, { noremap = true, silent = true })

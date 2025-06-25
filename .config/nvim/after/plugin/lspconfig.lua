@@ -45,18 +45,30 @@ end
 -- Server configurations
 lspconfig.pyright.setup({
     on_attach = on_attach,
+    capabilities = (function()
+        local capabilities = vim.lsp.protocol.make_client_capabilities()
+        capabilities.textDocument.publishDiagnostics.tagSupport.valueSet = { 2 }
+        return capabilities
+    end)(),
     settings = {
         pyright = {
             disableOrganizeImports = true, -- Using isort via null-ls
         },
         python = {
             pythonPath = get_python_path(),
-            analysis = {
-                autoSearchPaths = true,
-                useLibraryCodeForTypes = true,
-                diagnosticMode = "openFilesOnly",
-            },
+            analysis = { diagnosticMode = "off", typeCheckingMode = "off" },
+            -- analysis = {
+            --     autoSearchPaths = true,
+            --     useLibraryCodeForTypes = true,
+            --     diagnosticMode = "openFilesOnly",
+            -- },
         },
+    },
+})
+
+lspconfig.ruff.setup({
+    settings = {
+        interpreter = get_python_path(),
     },
 })
 

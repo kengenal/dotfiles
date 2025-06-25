@@ -6,6 +6,7 @@ if status is-interactive
     # podman completion fish | source
     fzf --fish | source
 
-    tmux
+    set -gx EDITOR nvim
+    set -gx VISUAL nvim
 
 end
