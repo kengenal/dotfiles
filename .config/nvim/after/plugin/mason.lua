@@ -2,7 +2,6 @@
 local mason = require("mason")
 local mason_lspconfig = require("mason-lspconfig")
 
-local opts = { noremap = true, silent = true }
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, {
     border = "rounded"
 })
@@ -23,7 +22,7 @@ mason_lspconfig.setup({
     -- list of servers for mason to install
     ensure_installed = {
         -- LSP servers
-        "pyright",
+        "basedpyright",
         "lua_ls",
         "docker_compose_language_service",
         "dockerls",
