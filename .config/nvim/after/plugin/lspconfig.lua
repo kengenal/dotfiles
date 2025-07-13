@@ -11,7 +11,7 @@ local on_attach = function(client, bufnr)
     vim.keymap.set("n", "<leader>cr", vim.lsp.buf.references, opts)
     vim.keymap.set("n", "<leader>cn", vim.lsp.buf.rename, opts)
 end
-vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({0}),{0}) 
+vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ 0 }), { 0 })
 
 vim.diagnostic.config({
     signs = {

@@ -18,11 +18,6 @@ local plugins = {
         priority = 1000,
     },
     {
-        "nvim-telescope/telescope.nvim",
-        tag = "0.1.8",
-        dependencies = { "nvim-lua/plenary.nvim" }
-    },
-    {
         "numToStr/Comment.nvim",
         opts = {
         },
@@ -37,6 +32,11 @@ local plugins = {
             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
             "MunifTanjim/nui.nvim",
         }
+    },
+    {
+        "nvim-telescope/telescope.nvim",
+        tag = "0.1.8",
+        dependencies = { "nvim-lua/plenary.nvim" }
     },
     {
         "nvim-lualine/lualine.nvim",
@@ -54,7 +54,6 @@ local plugins = {
             })
         end
     },
-    "vim-test/vim-test",
 
     --- LSP AND DIAGNOSTIGS
     "williamboman/mason.nvim",
@@ -73,13 +72,7 @@ local plugins = {
     "onsails/lspkind.nvim",
     "nvimtools/none-ls.nvim",
     --
-    { "lukas-reineke/indent-blankline.nvim",    main = "ibl", opts = {} },
     { "nvim-telescope/telescope-ui-select.nvim" },
-    {
-        "ThePrimeagen/harpoon",
-        branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim" }
-    },
     {
         "christoomey/vim-tmux-navigator",
         cmd = {
@@ -95,6 +88,37 @@ local plugins = {
             { "<c-e>",  "<cmd>TmuxNavigateUp<cr>" },
             { "<c-i>",  "<cmd>TmuxNavigateRight<cr>" },
             { "<c-\\>", "<cmd>TmuxNavigatePrevious<cr>" },
+        },
+    },
+    {
+        "mistweaverco/kulala.nvim",
+        ft = { "http", "rest" },
+        -- opts = {
+        --     -- your configuration comes here
+        --     global_keymaps = false,
+        --     global_keymaps_prefix = "<leader>R",
+        --     kulala_keymaps_prefix = "",
+        -- },
+        global_keymaps = {
+            ["Send request"] = { -- sets global mapping
+                "<F5>",
+                function() require("kulala").run() end,
+                mode = { "n", "v" },  -- optional mode, default is n
+                desc = "Send request" -- optional description, otherwise inferred from the key
+            },
+            ft = { "http", "rest" },  -- sets mapping for specified file types
+            ["Send all requests"] = {
+                "<leader>Ra",
+                function() require("kulala").run_all() end,
+                mode = { "n", "v" },
+                ft = { "http", "rest" }, -- sets mapping for specified file types
+            },
+            ["Replay the last request"] = {
+                "<leader>Rr",
+                function() require("kulala").replay() end,
+                ft = { "http", "rest" }, -- sets mapping for specified file types
+            },
+            ["Find request"] = false     -- set to false to disable
         },
     },
     -- GIT
@@ -117,40 +141,7 @@ local plugins = {
         }
     },
     {
-        "NeogitOrg/neogit",
-        dependencies = {
-            "nvim-lua/plenary.nvim",         -- required
-            "sindrets/diffview.nvim",        -- optional - Diff integration
-            "nvim-telescope/telescope.nvim", -- optional
-        },
-        config = true
-    },
-    {
-        "folke/trouble.nvim",
-        opts = {}, -- for default options, refer to the configuration section for custom setup.
-        cmd = "Trouble",
-        keys = {
-            {
-                "<leader>tt",
-                "<cmd>Trouble diagnostics toggle<cr>",
-                desc = "Diagnostics (Trouble)",
-            },
-        },
-    },
-    { "lewis6991/gitsigns.nvim" },
-
-    -- DEBUG
-    {
-        "mfussenegger/nvim-dap",
-        dependencies = {
-            "mfussenegger/nvim-dap-python",
-            "rcarriga/nvim-dap-ui",
-            "nvim-neotest/nvim-nio",
-            "theHamsta/nvim-dap-virtual-text",
-        },
-    },
-    {
-        'stevearc/oil.nvim',
+        "stevearc/oil.nvim",
         opts = {},
         dependencies = { "nvim-tree/nvim-web-devicons" },
         lazy = false,
@@ -162,29 +153,6 @@ local plugins = {
                 },
             })
         end
-    },
-    {
-        "sphamba/smear-cursor.nvim",
-
-        opts = {
-            -- Smear cursor when switching buffers or windows.
-            smear_between_buffers = true,
-
-            -- Smear cursor when moving within line or to neighbor lines.
-            -- Use `min_horizontal_distance_smear` and `min_vertical_distance_smear` for finer control
-            smear_between_neighbor_lines = true,
-
-            -- Draw the smear in buffer space instead of screen space when scrolling
-            scroll_buffer_space = true,
-
-            -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
-            -- Smears will blend better on all backgrounds.
-            legacy_computing_symbols_support = false,
-
-            -- Smear cursor in insert mode.
-            -- See also `vertical_bar_cursor_insert_mode` and `distance_stop_animating_vertical_bar`.
-            smear_insert_mode = true,
-        },
     },
 }
 local opts = {}
