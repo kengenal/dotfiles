@@ -6,7 +6,7 @@ background=#000000
 macos-titlebar-style=tabs
 gtk-titlebar = false
 confirm-close-surface = false
-
+theme = GruvboxDarkHard 
 window-padding-balance = true
 window-padding-x = 10
 window-padding-y = 10
