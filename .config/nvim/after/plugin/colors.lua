@@ -1,29 +1,24 @@
-require('kanso').setup({
-    bold = true,      -- enable bold fonts
-    italics = true,   -- enable italics
-    compile = false,  -- enable compiling the colorscheme
-    undercurl = true, -- enable undercurls
-    commentStyle = { italic = true },
-    functionStyle = {},
-    keywordStyle = { italic = true },
-    statementStyle = {},
-    typeStyle = {},
-    transparent = true,    -- do not set background color
-    dimInactive = false,   -- dim inactive window `:h hl-NormalNC`
-    terminalColors = true, -- define vim.g.terminal_color_{0,17}
-    colors = {             -- add/modify theme and palette colors
-        palette = {},
-        theme = { zen = {}, pearl = {}, ink = {}, all = {} },
-    },
-    overrides = function(colors) -- add/modify highlights
-        return {}
-    end,
-    theme = "zen",      -- Load "zen" theme
-    background = {      -- map the value of 'background' option to a theme
-        dark = "zen",   -- try "ink" !
-        light = "pearl" -- try "mist" !
-    },
+require("gruvbox").setup({
+  terminal_colors = true, -- add neovim terminal colors
+  undercurl = true,
+  underline = true,
+  bold = true,
+  italic = {
+    strings = true,
+    emphasis = true,
+    comments = true,
+    operators = false,
+    folds = true,
+  },
+  strikethrough = true,
+  invert_selection = false,
+  invert_signs = false,
+  invert_tabline = false,
+  inverse = true, -- invert background for search, diffs, statuslines and errors
+  contrast = "hard", -- can be "hard", "soft" or empty string
+  palette_overrides = {},
+  overrides = {},
+  dim_inactive = false,
+  transparent_mode = true,
 })
-
--- setup must be called before loading
-vim.cmd("colorscheme kanso")
+vim.cmd("colorscheme gruvbox")
