@@ -25,3 +25,6 @@ vim.keymap.set("n", "<A-h>", ":vertical resize -2<CR>", { noremap = true, silent
 vim.keymap.set("n", "<A-j>", ":resize +2<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<A-k>", ":resize -2<CR>", { noremap = true, silent = true })
 vim.keymap.set("n", "<A-l>", ":vertical resize +2<CR>", { noremap = true, silent = true })
+
+
+vim.keymap.set("x", "p", '"_dP')
