@@ -18,12 +18,6 @@ local plugins = {
         tag = "0.1.8",
         dependencies = { "nvim-lua/plenary.nvim" }
     },
-    {
-        "numToStr/Comment.nvim",
-        opts = {
-        },
-        lazy = false,
-    },
     "nvim-treesitter/nvim-treesitter",
     {
         "nvim-neo-tree/neo-tree.nvim",
@@ -51,11 +45,8 @@ local plugins = {
         end
     },
     "vim-test/vim-test",
-
-    --- LSP AND DIAGNOSTIGS
+    --LSP AND DIAGNOSTIGS
     "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
@@ -112,18 +103,10 @@ local plugins = {
             { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
         }
     },
-    {
-        "NeogitOrg/neogit",
-        dependencies = {
-            "nvim-lua/plenary.nvim",         -- required
-            "sindrets/diffview.nvim",        -- optional - Diff integration
-            "nvim-telescope/telescope.nvim", -- optional
-        },
-        config = true
-    },
+    {"sindrets/diffview.nvim"},
     {
         "folke/trouble.nvim",
-        opts = {}, -- for default options, refer to the configuration section for custom setup.
+        opts = {}, 
         cmd = "Trouble",
         keys = {
             {

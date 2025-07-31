@@ -33,3 +33,4 @@ vim.opt.mouse = ""
 vim.opt.pumblend = 0
 vim.opt.winblend = 0
 vim.o.scrolloff = 999
+-- vim.opt.winborder = "rounded"
