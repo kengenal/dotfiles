@@ -11,35 +11,7 @@ vim.keymap.set("n", "<leader>e", function()
 end, { desc = "Pokaż błąd z None LS / LSP w oknie" })
 
 
+vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
+vim.keymap.set("n", "gv", ":rightbelow vsplit | lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 
-
--- vim.lsp.enable("luals")
-vim.lsp.enable({"rust_analyzer", "basedpyright", "ruff"})
---
--- lspconfig.tailwindcss.setup({
---     on_attach = on_attach,
--- })
---
--- lspconfig.docker_compose_language_service.setup({
---     on_attach = on_attach,
--- })
---
--- lspconfig.dockerls.setup({
---     on_attach = on_attach,
--- })
---
--- lspconfig.htmx.setup({
---     on_attach = on_attach,
--- })
---
--- lspconfig.ansiblels.setup({
---     on_attach = on_attach,
--- })
---
--- lspconfig.emmet_ls.setup({
---     on_attach = on_attach,
--- })
---
--- lspconfig.bashls.setup({
---     on_attach = on_attach,
--- })
+vim.lsp.enable({"rust_analyzer", "basedpyright", "ruff", "htmx", "tailwindcss"})
