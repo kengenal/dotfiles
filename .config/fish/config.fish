@@ -10,3 +10,5 @@ if status is-interactive
     set -gx VISUAL nvim
 
 end
+
+fish_add_path /home/kenge/.spicetify

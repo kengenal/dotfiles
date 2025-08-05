@@ -4,7 +4,11 @@ local function file_exists(name)
 end
 
 local function load_project_config_if_exists()
-    local pth = vim.fn.expand('%:p') .. ".idea/projectconfig.lua"
+    local real_path = vim.fn.expand('%:p')
+    real_path = real_path:gsub("^[^:/]+://", "")
+
+    local pth = real_path .. ".idea/projectconfig.lua"
+    
     if file_exists(pth) then
         package.path = package.path .. ";" .. pth
         require("projectconfig")

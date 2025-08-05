@@ -14,4 +14,4 @@ end, { desc = "Pokaż błąd z None LS / LSP w oknie" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
 vim.keymap.set("n", "gv", ":rightbelow vsplit | lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 
-vim.lsp.enable({"rust_analyzer", "basedpyright", "ruff", "htmx", "tailwindcss"})
+vim.lsp.enable({"rust_analyzer", "basedpyright", "ruff", "htmx", "tailwindcss", "elixir_ls", "dockerls"})
