@@ -1,4 +1,4 @@
-vim.keymap.set("n", "<C-o>", ":Oil<CR>", { noremap = true, silent = true })
+vim.keymap.set("n", "-", ":Oil<CR>", { noremap = true, silent = true })
 
 require("oil").setup({
   -- Oil will take over directory buffers (e.g. `vim .` or `:e src/`)
@@ -63,11 +63,11 @@ require("oil").setup({
     ["g?"] = { "actions.show_help", mode = "n" },
     ["<CR>"] = "actions.select",
     ["<C-s>"] = { "actions.select", opts = { vertical = true } },
-    ["<C-h>"] = { "actions.select", opts = { horizontal = true } },
-    ["<C-h>"] = { "actions.select", opts = { tab = true } },
+    -- ["<C-h>"] = { "actions.select", opts = { horizontal = true } },
+    -- ["<C-h>"] = { "actions.select", opts = { tab = false } },
     ["<C-p>"] = "actions.preview",
     ["<C-c>"] = { "actions.close", mode = "n" },
-    ["<C-l>"] = "actions.refresh",
+    ["<C-."] = "actions.refresh",
     ["-"] = { "actions.parent", mode = "n" },
     ["_"] = { "actions.open_cwd", mode = "n" },
     ["`"] = { "actions.cd", mode = "n" },
@@ -78,7 +78,7 @@ require("oil").setup({
     ["g\\"] = { "actions.toggle_trash", mode = "n" },
   },
   -- Set to false to disable all of the above keymaps
-  use_default_keymaps = true,
+  use_default_keymaps = false,
   view_options = {
     -- Show files and directories that start with "."
     show_hidden = true,
@@ -136,7 +136,7 @@ require("oil").setup({
     -- optionally override the oil buffers window title with custom function: fun(winid: integer): string
     get_win_title = nil,
     -- preview_split: Split direction: "auto", "left", "right", "above", "below".
-    preview_split = "auto",
+    preview_split = "left",
     -- This is the config that will be passed to nvim_open_win.
     -- Change values here to customize the layout
     override = function(conf)

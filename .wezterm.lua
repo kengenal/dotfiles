@@ -6,14 +6,16 @@ local config = wezterm.config_builder()
 
 
 -- For example, changing the color scheme:
-config.color_scheme = 'Gnometerm'
-config.font = wezterm.font("CaskaydiaCove Nerd Font", {weight="DemiBold", stretch="Normal", style="Normal"})
-config.window_background_image = wezterm.home_dir .. '/Pictures/Wallpapers/standard/security-break-grim-reaper-hacker-qj-2560x1440.jpg'
+config.color_scheme = 'Gruvbox dark, hard (base16)'
+-- config.window_background_image = wezterm.home_dir .. '/Pictures/Wallpapers/standard/security-break-grim-reaper-hacker-qj-2560x1440.jpg'
 config.window_background_image_hsb = {
     -- Darken the background image by reducing it to 1/3rd
     brightness = 0.030,
     hue = 1.0,
     saturation = 1.0,
+}
+config.colors = {
+    background = '#0F0E0E',
 }
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_tab_bar = false
@@ -21,7 +23,7 @@ config.window_decorations = "RESIZE"
 config.font_size = 20.0
 config.initial_rows = 100
 config.initial_cols = 200
--- config.window_background_opacity = 0.98
+config.window_background_opacity = 0.85
 
 config.max_fps = 165
 config.enable_scroll_bar = true
