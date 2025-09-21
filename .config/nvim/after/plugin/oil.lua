@@ -27,6 +27,7 @@ require("oil").setup({
     list = false,
     conceallevel = 3,
     concealcursor = "nvic",
+    signcolumn = "yes:2",
   },
   -- Send deleted files to the trash instead of permanently deleting them (:help oil-trash)
   delete_to_trash = false,
@@ -202,3 +203,34 @@ require("oil").setup({
     border = "rounded",
   },
 })
+
+require('oil-git-status').setup({
+  show_ignored = true,
+  symbols = {
+    index = {
+      ["!"] = " ",  -- ignore in .gitignore → pusty symbol
+      ["?"] = "",  -- untracked
+      ["A"] = "",  -- added
+      ["C"] = "",  -- copied / changed
+      ["D"] = "",  -- deleted
+      ["M"] = "",  -- modified
+      ["R"] = "",  -- renamed
+      ["T"] = "",  -- type changed
+      ["U"] = "",  -- unmerged / conflict
+      [" "] = " ",  -- clean
+    },
+    working_tree = {
+      ["!"] = " ",  -- ignore in .gitignore
+      ["?"] = "",  -- untracked
+      ["A"] = "",  -- added
+      ["C"] = "",  -- copied / changed
+      ["D"] = "",  -- deleted
+      ["M"] = "",  -- modified
+      ["R"] = "",  -- renamed
+      ["T"] = "",  -- type changed
+      ["U"] = "",  -- unmerged / conflict
+      [" "] = " ",  -- clean
+    },
+  },
+})
+

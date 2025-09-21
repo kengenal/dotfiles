@@ -1,14 +1,3 @@
 if status is-interactive
     # Commands to run in interactive sessions can go here
-    starship init fish | source
-    pyenv init - | source
-    fzf --fish | source
-    # podman completion fish | source
-    fzf --fish | source
-
-    set -gx EDITOR nvim
-    set -gx VISUAL nvim
-
 end
-
-fish_add_path /home/kenge/.spicetify

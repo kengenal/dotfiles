@@ -10,11 +10,11 @@ opacity = 0.85
 size = 18.0
 
 [font.normal]
-family = "CaskaydiaCove Nerd Font"
+family = "CaskaydiaCove Nerd Font Propo"
 style = "Regular"
 
 [colors.primary]
-background = "#0F0E0E"
+background = "#000000"
 foreground = "#f2e5bc"
 
 [colors.normal]

@@ -12,22 +12,17 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    { "ellisonleao/gruvbox.nvim" },
+    {
+        "webhooked/kanso.nvim",
+        lazy = false,
+        priority = 1000,
+    },
     {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.8",
         dependencies = { "nvim-lua/plenary.nvim" }
     },
     "nvim-treesitter/nvim-treesitter",
-    {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v3.x",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim",
-        }
-    },
     {
         "nvim-lualine/lualine.nvim",
         dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
@@ -143,6 +138,15 @@ local plugins = {
         end
     },
     {
+      "refractalize/oil-git-status.nvim",
+
+      dependencies = {
+        "stevearc/oil.nvim",
+      },
+
+      config = true,
+    },
+    {
         "sphamba/smear-cursor.nvim",
 
         opts = {
@@ -165,6 +169,15 @@ local plugins = {
             smear_insert_mode = true,
         },
     },
+    {
+      "stevearc/aerial.nvim",
+      opts = {},
+      -- Optional dependencies
+      dependencies = {
+         "nvim-treesitter/nvim-treesitter",
+         "nvim-tree/nvim-web-devicons"
+      },
+    }
 }
 local opts = {}
 
