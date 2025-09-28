@@ -43,7 +43,7 @@ end)
 
         -- local output = vim.fn.systemlist("tmux capture-pane -pt 2 -S - -E -")
 
-local END_MARKER = "HOBBIT DEFITED!"
+local END_MARKER = "|O|"
 local ns_id = vim.api.nvim_create_namespace("test_virtual_text")
 
 local function trim(s)
@@ -86,6 +86,7 @@ local function parse_pytest(bufnr, output)
 
         local test_name_passed = line:match("([^%s]+)%s+PASSED%s*.*")
         local test_name_failed = line:match("([^%s]+)%s+FAILED")
+        -- print(vim.inspect(test_name_passed))
 
         if test_name_passed then
             local method_name = test_name_passed:match(".*%:%:([^%s]+)")
@@ -185,7 +186,7 @@ vim.g["test#custom_strategies"] = {
             vim.fn.system("tmux select-pane -t 1")
         end
 
-        vim.fn.system("tmux send-keys -t " .. target_pane_index .. " 'clear' C-m")
+        vim.fn.system("tmux send-keys -t " .. target_pane_index .. " 'clear && printf \"\\e[3J\"' C-m")
         vim.fn.system(string.format(
             "tmux send-keys -t %d '%s; echo \"%s\"' C-m",
             target_pane_index,
@@ -235,3 +236,4 @@ vim.g["test#custom_strategies"] = {
     end,
 }
 vim.g["test#strategy"] = "custom_tmux"       
+-- vim.g["test#strategy"] = "neovim"       
