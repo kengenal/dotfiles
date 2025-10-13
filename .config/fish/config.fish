@@ -9,6 +9,8 @@ if status is-interactive
 
     set -gx EDITOR nvim
     set -gx VISUAL nvim
+    set -x GOPATH $HOME/go
+    set -x PATH $PATH /usr/local/go/bin $GOPATH/bin
 
 end
 

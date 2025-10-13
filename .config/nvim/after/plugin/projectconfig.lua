@@ -132,7 +132,6 @@ local function run_compose_debug()
         config.docker.app
     })
 
-    vim.cmd("Neotree close")
     require("dap").continue()
 end
 

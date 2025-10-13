@@ -206,6 +206,7 @@ require("oil").setup({
 
 require('oil-git-status').setup({
   show_ignored = true,
+
   symbols = {
     index = {
       ["!"] = " ",  -- ignore in .gitignore → pusty symbol

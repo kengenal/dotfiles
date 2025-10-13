@@ -12,11 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    {
-        "webhooked/kanso.nvim",
-        lazy = false,
-        priority = 1000,
-    },
+    { "EdenEast/nightfox.nvim" },
     {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.8",

@@ -9,12 +9,13 @@ null_ls.setup({
         null_ls.builtins.formatting.djlint,
         null_ls.builtins.formatting.black,
         null_ls.builtins.formatting.isort,
+        null_ls.builtins.formatting.gofmt,
 
         null_ls.builtins.completion.spell,
 
         null_ls.builtins.diagnostics.djlint,
         null_ls.builtins.diagnostics.codespell,
-         null_ls.builtins.diagnostics.pylint,
+        null_ls.builtins.diagnostics.pylint,
     },
 })
 

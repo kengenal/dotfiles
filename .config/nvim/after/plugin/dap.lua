@@ -21,7 +21,6 @@ vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
 vim.keymap.set("n", "<leader>B", dap.run_to_cursor)
 
 vim.keymap.set("n", "<leader>dc", function()
-    vim.cmd("Neotree close")
     dap.continue()
 end)
 vim.keymap.set("n", "<leader>dsi", dap.step_into)
