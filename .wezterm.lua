@@ -15,7 +15,7 @@ config.window_background_image_hsb = {
     saturation = 1.0,
 }
 config.colors = {
-    background = '#0F0E0E',
+    background = '#000000',
 }
 config.hide_tab_bar_if_only_one_tab = true
 config.enable_tab_bar = false
@@ -24,6 +24,7 @@ config.font_size = 20.0
 config.initial_rows = 100
 config.initial_cols = 200
 config.window_background_opacity = 0.85
+config.font = wezterm.font('CaskaydiaCove Nerd Font Mono')
 
 config.max_fps = 165
 config.enable_scroll_bar = true

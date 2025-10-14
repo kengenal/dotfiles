@@ -165,15 +165,6 @@ local plugins = {
             smear_insert_mode = true,
         },
     },
-    {
-      "stevearc/aerial.nvim",
-      opts = {},
-      -- Optional dependencies
-      dependencies = {
-         "nvim-treesitter/nvim-treesitter",
-         "nvim-tree/nvim-web-devicons"
-      },
-    }
 }
 local opts = {}
 

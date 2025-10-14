@@ -234,5 +234,5 @@ vim.g["test#custom_strategies"] = {
 --         end, timeout_ms)
 --     end,
 -- }
--- vim.g["test#strategy"] = "custom_tmux"       
+vim.g["test#strategy"] = "custom_tmux"       
 -- vim.g["test#strategy"] = "neovim"       

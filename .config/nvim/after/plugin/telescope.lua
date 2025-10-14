@@ -26,3 +26,9 @@ vim.keymap.set("n", "<leader>fg", builtin.git_files, {})
 vim.keymap.set("n", "<leader>fs", builtin.git_status, {})
 vim.keymap.set("n", "<leader>fb", builtin.buffers, {})
 vim.keymap.set("n", "<leader>fm", builtin.marks, {})
+vim.keymap.set("n", "<leader>a", function() 
+    require('telescope.builtin').lsp_document_symbols({
+      symbols = {"Method", "Function", "Class"},
+      sorting_strategy = "ascending",
+    })
+end, {})
