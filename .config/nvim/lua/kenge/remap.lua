@@ -26,3 +26,9 @@ vim.keymap.set("n", "<C-k>", "<C-w>k", { noremap = true, silent = true })
 vim.keymap.set("n", "<C-l>", "<C-w>l", { noremap = true, silent = true })
 
 vim.keymap.set("x", "p", '"_dP')
+
+vim.keymap.set('t', '<Esc>', '<C-\\><C-n>', { noremap = true })
+vim.keymap.set('t', '<A-h>', '<C-\\><C-n><C-w>h', { noremap = true })
+vim.keymap.set('t', '<A-j>', '<C-\\><C-n><C-w>j', { noremap = true })
+vim.keymap.set('t', '<A-k>', '<C-\\><C-n><C-w>k', { noremap = true })
+vim.keymap.set('t', '<A-l>', '<C-\\><C-n><C-w>l', { noremap = true })
