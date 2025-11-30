@@ -12,7 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    { "EdenEast/nightfox.nvim" },
+    {"RRethy/base16-nvim"},
     {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.8",

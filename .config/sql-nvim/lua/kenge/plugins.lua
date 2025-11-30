@@ -12,17 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    {
-        "webhooked/kanso.nvim",
-        lazy = false,
-        priority = 1000,
-    },
-    {
-        "numToStr/Comment.nvim",
-        opts = {
-        },
-        lazy = false,
-    },
+    {"RRethy/base16-nvim"},
     "nvim-treesitter/nvim-treesitter",
     {
         "nvim-lualine/lualine.nvim",
@@ -42,9 +32,6 @@ local plugins = {
     },
 
     --- LSP AND DIAGNOSTIGS
-    "williamboman/mason.nvim",
-    "williamboman/mason-lspconfig.nvim",
-    "neovim/nvim-lspconfig",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",

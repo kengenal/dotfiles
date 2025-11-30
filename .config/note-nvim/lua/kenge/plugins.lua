@@ -21,11 +21,6 @@ local plugins = {
     },
     "nvim-treesitter/nvim-treesitter",
     {
-        "nvim-telescope/telescope.nvim",
-        tag = "0.1.8",
-        dependencies = { "nvim-lua/plenary.nvim" }
-    },
-    {
         "nvim-lualine/lualine.nvim",
         dependencies = { "kyazdani42/nvim-web-devicons", opt = true },
     },
@@ -43,6 +38,7 @@ local plugins = {
     },
 
     --- LSP AND DIAGNOSTIGS
+    "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
@@ -56,6 +52,11 @@ local plugins = {
     "onsails/lspkind.nvim",
     "nvimtools/none-ls.nvim",
     --
+    {
+        "nvim-telescope/telescope.nvim",
+        tag = "0.1.8",
+        dependencies = { "nvim-lua/plenary.nvim" }
+    },
     { "nvim-telescope/telescope-ui-select.nvim" },
     {
         "christoomey/vim-tmux-navigator",
@@ -75,55 +76,29 @@ local plugins = {
         },
     },
     {
-        "mistweaverco/kulala.nvim",
-        ft = { "http", "rest" },
-        -- opts = {
-        --     -- your configuration comes here
-        --     global_keymaps = false,
-        --     global_keymaps_prefix = "<leader>R",
-        --     kulala_keymaps_prefix = "",
-        -- },
-        global_keymaps = {
-            ["Send request"] = { -- sets global mapping
-                "<F5>",
-                function() require("kulala").run() end,
-                mode = { "n", "v" },  -- optional mode, default is n
-                desc = "Send request" -- optional description, otherwise inferred from the key
-            },
-            ft = { "http", "rest" },  -- sets mapping for specified file types
-            ["Send all requests"] = {
-                "<leader>Ra",
-                function() require("kulala").run_all() end,
-                mode = { "n", "v" },
-                ft = { "http", "rest" }, -- sets mapping for specified file types
-            },
-            ["Replay the last request"] = {
-                "<leader>Rr",
-                function() require("kulala").replay() end,
-                ft = { "http", "rest" }, -- sets mapping for specified file types
-            },
-            ["Find request"] = false     -- set to false to disable
+        "sphamba/smear-cursor.nvim",
+
+        opts = {
+            -- Smear cursor when switching buffers or windows.
+            smear_between_buffers = true,
+
+            -- Smear cursor when moving within line or to neighbor lines.
+            -- Use `min_horizontal_distance_smear` and `min_vertical_distance_smear` for finer control
+            smear_between_neighbor_lines = true,
+
+            -- Draw the smear in buffer space instead of screen space when scrolling
+            scroll_buffer_space = true,
+
+            -- Set to `true` if your font supports legacy computing symbols (block unicode symbols).
+            -- Smears will blend better on all backgrounds.
+            legacy_computing_symbols_support = false,
+
+            -- Smear cursor in insert mode.
+            -- See also `vertical_bar_cursor_insert_mode` and `distance_stop_animating_vertical_bar`.
+            smear_insert_mode = true,
         },
     },
-    -- GIT
-    {
-        "kdheepak/lazygit.nvim",
-        lazy = true,
-        cmd = {
-            "LazyGit",
-            "LazyGitConfig",
-            "LazyGitCurrentFile",
-            "LazyGitFilter",
-            "LazyGitFilterCurrentFile",
-        },
-        -- optional for floating window border decoration
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-        },
-        keys = {
-            { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-        }
-    },
+    { "nvim-telescope/telescope-ui-select.nvim" },
     {
         'stevearc/oil.nvim',
         opts = {},
@@ -147,6 +122,13 @@ local plugins = {
 
       config = true,
     },
+    {
+        "MeanderingProgrammer/render-markdown.nvim",
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },            -- if you use the mini.nvim suite
+    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
+        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+    opts = {},
+    }
 }
 local opts = {}
 

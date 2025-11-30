@@ -19,4 +19,4 @@ end, { desc = "Show error in window like hover" })
 vim.keymap.set("n", "gd", vim.lsp.buf.definition, { noremap = true, silent = true })
 vim.keymap.set("n", "gv", ":rightbelow vsplit | lua vim.lsp.buf.definition()<CR>", { noremap = true, silent = true })
 
-vim.lsp.enable({"gopls", "rust_analyzer", "basedpyright", "ruff", "htmx", "tailwindcss", "elixir_ls", "dockerls", "docker_compose_language_service"})
+vim.lsp.enable({"templ","gopls", "rust_analyzer", "basedpyright", "ruff", "htmx", "tailwindcss", "elixir_ls", "dockerls", "docker_compose_language_service"})

@@ -20,3 +20,8 @@ end
 set -gx PATH $PATH /Users/lukaszsebastianski/.lmstudio/bin
 # End of LM Studio CLI section
 
+
+# Added by LM Studio CLI (lms)
+set -gx PATH $PATH /home/kenge/.lmstudio/bin
+# End of LM Studio CLI section
+
