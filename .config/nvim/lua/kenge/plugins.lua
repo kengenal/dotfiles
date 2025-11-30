@@ -12,11 +12,11 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    {"RRethy/base16-nvim"},
+    { "RRethy/base16-nvim" },
     {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.8",
-        dependencies = { "nvim-lua/plenary.nvim" }
+        dependencies = { "nvim-lua/plenary.nvim" },
     },
     "nvim-treesitter/nvim-treesitter",
     {
@@ -33,7 +33,7 @@ local plugins = {
             require("nvim-surround").setup({
                 -- Configuration here, or leave empty to use defaults
             })
-        end
+        end,
     },
     "vim-test/vim-test",
     --LSP AND DIAGNOSTIGS
@@ -56,7 +56,7 @@ local plugins = {
     {
         "ThePrimeagen/harpoon",
         branch = "harpoon2",
-        dependencies = { "nvim-lua/plenary.nvim" }
+        dependencies = { "nvim-lua/plenary.nvim" },
     },
     {
         "christoomey/vim-tmux-navigator",
@@ -91,13 +91,13 @@ local plugins = {
             "nvim-lua/plenary.nvim",
         },
         keys = {
-            { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-        }
+            { "<leader>gg", "<cmd>LazyGit<cr>", desc = "LazyGit" },
+        },
     },
-    {"sindrets/diffview.nvim"},
+    { "sindrets/diffview.nvim" },
     {
         "folke/trouble.nvim",
-        opts = {}, 
+        opts = {},
         cmd = "Trouble",
         keys = {
             {
@@ -120,7 +120,7 @@ local plugins = {
         },
     },
     {
-        'stevearc/oil.nvim',
+        "stevearc/oil.nvim",
         opts = {},
         dependencies = { "nvim-tree/nvim-web-devicons" },
         lazy = false,
@@ -131,16 +131,16 @@ local plugins = {
                     show_hidden = true,
                 },
             })
-        end
+        end,
     },
     {
-      "refractalize/oil-git-status.nvim",
+        "refractalize/oil-git-status.nvim",
 
-      dependencies = {
-        "stevearc/oil.nvim",
-      },
+        dependencies = {
+            "stevearc/oil.nvim",
+        },
 
-      config = true,
+        config = true,
     },
     {
         "sphamba/smear-cursor.nvim",
@@ -165,6 +165,9 @@ local plugins = {
             smear_insert_mode = true,
         },
     },
+    { "windwp/nvim-ts-autotag" },
+    { "mattn/emmet-vim" },
+    { "norcalli/nvim-colorizer.lua" }
 }
 local opts = {}
 
