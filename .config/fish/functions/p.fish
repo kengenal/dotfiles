@@ -1,5 +1,5 @@
 function p --description 'Open project'
-    set project (find ~/Desktop/work ~/Desktop/python ~/Projects ~/.hyperdots ~/.dotfiles -maxdepth 1 -type d -not -path "*/.config" -not -path "*/.git" -not -path "*/.idea" -not -path "*/.venv" 2>/dev/null | fzf --ignore-case --preview "ls --color=always -a1 {}")
+    set project (find ~/notes ~/Desktop/work ~/Desktop/python ~/Projects ~/.hyperdots ~/.dotfiles -maxdepth 1 -type d -not -path "*/.config" -not -path "*/.git" -not -path "*/.idea" -not -path "*/.venv" 2>/dev/null | fzf --ignore-case --preview "ls --color=always -a1 {}")
     if test -n "$project"
         cd "$project"
         set current_dir (basename (pwd))

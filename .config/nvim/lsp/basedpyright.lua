@@ -170,9 +170,9 @@ return {
                 },
             },
         },
-        python = {
-            pythonPath = ".venv/bin/python",
-            venvPath = ".venv", 
-        },
+        -- python = {
+        --     pythonPath = ".venv/bin/python",
+        --     venvPath = ".venv", 
+        -- },
     },
 }

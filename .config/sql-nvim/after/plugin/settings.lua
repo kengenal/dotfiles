@@ -43,3 +43,4 @@ vim.api.nvim_create_autocmd("FileType", {
     end,
 })
 
+vim.g.db_ui_save_location = "~/sql"
