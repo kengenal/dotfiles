@@ -20,7 +20,6 @@ require("oil").setup({
   -- Window-local options to use for oil buffers
   win_options = {
     wrap = false,
-    signcolumn = "no",
     cursorcolumn = false,
     foldcolumn = "0",
     spell = false,
@@ -210,26 +209,26 @@ require('oil-git-status').setup({
   symbols = {
     index = {
       ["!"] = " ",  -- ignore in .gitignore → pusty symbol
-      ["?"] = "",  -- untracked
-      ["A"] = "",  -- added
+      ["?"] = "󱀶",  -- untracked
+      ["A"] = "",  -- added
       ["C"] = "",  -- copied / changed
-      ["D"] = "",  -- deleted
-      ["M"] = "",  -- modified
+      ["D"] = "󱪢",  -- deleted
+      ["M"] = "󰷉",  -- modified
       ["R"] = "",  -- renamed
       ["T"] = "",  -- type changed
-      ["U"] = "",  -- unmerged / conflict
+      ["U"] = "󰩌",  -- unmerged / conflict
       [" "] = " ",  -- clean
     },
     working_tree = {
       ["!"] = " ",  -- ignore in .gitignore
-      ["?"] = "",  -- untracked
-      ["A"] = "",  -- added
+      ["?"] = "󱀶",  -- untracked
+      ["A"] = "",  -- added
       ["C"] = "",  -- copied / changed
-      ["D"] = "",  -- deleted
-      ["M"] = "",  -- modified
+      ["D"] = "󱪢",  -- deleted
+      ["M"] = "󰷉",  -- modified
       ["R"] = "",  -- renamed
       ["T"] = "",  -- type changed
-      ["U"] = "",  -- unmerged / conflict
+      ["U"] = "󰩌",  -- unmerged / conflict
       [" "] = " ",  -- clean
     },
   },

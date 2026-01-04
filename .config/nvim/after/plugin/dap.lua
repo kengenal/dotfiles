@@ -2,6 +2,48 @@ require("dapui").setup()
 local dap, dapui = require("dap"), require("dapui")
 require("nvim-dap-virtual-text").setup()
 require("dap-python").setup("python")
+require("dap-go").setup()
+
+table.insert(dap.configurations.python, {
+    type = "python",
+    request = "launch",
+    name = "Django runserver",
+    program = vim.fn.getcwd() .. "/manage.py",
+    args = { "runserver", "--noreload" },
+    django = true,
+    console = "integratedTerminal",
+})
+
+table.insert(dap.configurations.python, {
+    type = "python",
+    request = "launch",
+    name = "Run main.py",
+    program = vim.fn.getcwd() .. "/main.py",
+    console = "integratedTerminal",
+})
+
+table.insert(dap.configurations.python, {
+    type = "python",
+    request = "launch",
+    name = "Run app.py",
+    program = vim.fn.getcwd() .. "/app.py",
+    console = "integratedTerminal",
+})
+
+dap.configurations.go = {
+    {
+        type = "go",
+        name = "Debug Current File",
+        request = "launch",
+        program = "${file}",
+    },
+    {
+        type = "go",
+        name = "Debug main.go",
+        request = "launch",
+        program = vim.fn.getcwd() .. "/main.go",
+    },
+}
 
 dap.listeners.before.attach.dapui_config = function()
     dapui.open()
@@ -15,7 +57,6 @@ end
 dap.listeners.before.event_exited.dapui_config = function()
     dapui.close()
 end
-
 
 vim.keymap.set("n", "<leader>b", dap.toggle_breakpoint)
 vim.keymap.set("n", "<leader>B", dap.run_to_cursor)
