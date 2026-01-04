@@ -4,11 +4,11 @@ local function file_exists(name)
 end
 
 local function load_project_config_if_exists()
-    local real_path = vim.fn.expand('%:p')
+    local real_path = vim.fn.expand("%:p")
     real_path = real_path:gsub("^[^:/]+://", "")
 
     local pth = real_path .. ".idea/projectconfig.lua"
-    
+
     if file_exists(pth) then
         package.path = package.path .. ";" .. pth
         require("projectconfig")
@@ -19,197 +19,191 @@ local function create_config()
     os.execute("mkdir " .. ".idea")
     local file = io.open(".idea/projectconfig.lua", "w")
     file:write([[
--- django in docker
--- python -Xfrozen_modules=off -m debugpy --listen 0.0.0.0:5555 manage.py runserver 0.0.0.0:8000
-
--- DOCKER
-local dap = require("dap")
-
-local config = {
-    python = {
-        path = ".venv/bin/python",
-        debug_port = 5678,
-        test_debug_port = 5555,
-    },
-    docker = {
-        app = "api",
-        compose_file = "docker-compose.yml",
-        debug_entrypoint = {
-            "python", "-Xfrozen_modules=off", "-m", "debugpy",
-            "--listen", "0.0.0.0:5678", "--wait-for-client", "main.py"
-        },
-    },
-    test = {
-        runner = "pytest",
-    }
-}
-
--- DOCKER
-local runner = "test#python#" .. config.test.runner .. "#executable"
-vim.g["test#python#runner"] = config.test.runner
-vim.g[runner] = "docker compose exec " .. config.docker.app .. " " .. config.test.runner .. " --durations=1"
-
-dap.adapters.python = {
-    port = config.python.debug_port,
-    host = "127.0.0.1",
-    type = 'server',
-}
-
-dap.configurations.python = {
-    {
-        type = "python",
-        connect = {
-            host = "127.0.0.1",
-            port = config.python.debug_port,
-        },
-        request = "attach",
-        justMyCode = false,
-        console = "integratedTerminal",
-        pathMappings = {
-            {
-                localRoot = vim.fn.getcwd(), -- Ścieżka w Neovimie
-                remoteRoot = "/app",         -- Ścieżka na serwerze
-            },
-        },
-    },
-}
-
-dap.listeners.after.event_initialized["docker_logs"] = function()
-    local logs_command = "docker compose logs " .. config.docker.app .. " -f"
-
-    vim.fn.jobstart(logs_command, {
-        on_stdout = function(_, data)
-            for _, line in ipairs(data) do
-                require("dap.repl").append("[Docker Logs] " .. line)
-            end
-        end
-    })
-end
-
-local function setup_debug_test()
-    dap.adapters.python.port = config.python.test_debug_port
-    dap.configurations.python[1].connect.port = config.python.test_debug_port
-    vim.g[runner] = "docker compose exec " .. config.docker.app ..
-        " python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:" ..
-        config.python.test_debug_port .. " -m " .. config.test.runner
-end
-
-vim.keymap.set("n", "dtn", function()
-    setup_debug_test()
-    vim.cmd("TestNearest")
-end)
-
-vim.keymap.set("n", "dtc", function()
-    setup_debug_test()
-    vim.cmd("TestClass")
-end)
-
-vim.keymap.set("n", "dtl", function()
-    setup_debug_test()
-    vim.cmd("TestLast")
-end)
-
-vim.keymap.set("n", "dtf", function()
-    setup_debug_test()
-    vim.cmd("TestFile")
-end)
-
-local function run_compose()
-    vim.system({
-        "docker", "compose", "-f", config.docker.compose_file,
-        "up", "-d", "--force-recreate", config.docker.app
-    })
-    vim.cmd("normal! <F7>")
-    vim.notify("Start app")
-end
-
-local function run_compose_debug()
-    vim.system({
-        "docker", "compose", "-f", config.docker.compose_file,
-        "run", "-d", "--rm",
-        "--entrypoint", table.concat(config.docker.debug_entrypoint, " "),
-        "-p", string.format("%d:%d", config.python.debug_port, config.python.debug_port),
-        config.docker.app
-    })
-
-    require("dap").continue()
-end
-
-vim.keymap.set("n", "<F5>", run_compose)
-vim.keymap.set("n", "<F6>", run_compose_debug)
-
--- ENDDOCKER
-
--- STANDARD
+-- REMEMBER STOP APP COINTAINER BEFORE START DEBUG    
+-- local dap = require("dap")
 --
--- vim.g["test#python#runner"] = "pytest"
--- local runner = "test#python#pytest#executable"
--- local test_command = vim.g[runner]
---
--- local test_debug_exe = "python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 127.0.0.1:".. port .." pytest"
--- dap.configurations.python = {
---   type = 'python',
---   request = 'launch',
---   name = 'Django',
---   program = vim.fn.getcwd() .. '/manage.py',  -- NOTE: Adapt path to manage.py as needed
---   args = {'runserver'},
+-- local config = {
+--     python = {
+--         debug_port = 5678,
+--         test_debug_port = 5555,
+--         max_retries = 240, -- 240 prób dla 2-minutowego startu
+--         test_max_retries = 40,
+--     },
+--     docker = {
+--         app = "web",
+--         compose_file = "docker-compose.yml",
+--         debug_entrypoint = { "manage.py", "runserver", "0.0.0.0:8000" },
+--     },
+--     test = {
+--         runner = "pytest",
+--     },
 -- }
 --
+-- -- Konfiguracja test-runnera
+-- local runner = "test#python#" .. config.test.runner .. "#executable"
+-- vim.g["test#python#runner"] = config.test.runner
+-- vim.g[runner] = "docker compose exec " .. config.docker.app .. " " .. config.test.runner .. " --durations=1"
+--
+-- -- Adapter dla aplikacji
+-- dap.adapters.python = {
+--     type = "server",
+--     host = "0.0.0.0",
+--     port = config.python.debug_port,
+--     options = {
+--         max_retries = config.python.max_retries,
+--     },
+-- }
+--
+-- -- Adapter dla testów
+-- dap.adapters.python_test = {
+--     type = "server",
+--     host = "0.0.0.0",
+--     port = config.python.test_debug_port,
+--     options = {
+--         max_retries = config.python.test_max_retries,
+--     },
+-- }
+--
+-- -- Dwie konfiguracje
+-- dap.configurations.python = {
+--     {
+--         name = "Docker App",
+--         type = "python",
+--         request = "attach",
+--         justMyCode = false,
+--         pathMappings = {
+--             { localRoot = vim.fn.getcwd(), remoteRoot = "/app" },
+--         },
+--     },
+--     {
+--         name = "Docker Tests",
+--         type = "python_test",
+--         request = "attach",
+--         justMyCode = false,
+--         pathMappings = {
+--             { localRoot = vim.fn.getcwd(), remoteRoot = "/app" },
+--         },
+--     },
+-- }
+--
+-- local function run_test_with_debug(test_cmd)
+--     vim.g[runner] = "docker compose run --rm -p "
+--         .. config.python.test_debug_port
+--         .. ":"
+--         .. config.python.test_debug_port
+--         .. " --entrypoint='' "
+--         .. config.docker.app
+--         .. " python -Xfrozen_modules=off -m debugpy --wait-for-client --listen 0.0.0.0:"
+--         .. config.python.test_debug_port
+--         .. " -m "
+--         .. config.test.runner
+--
+--     vim.cmd(test_cmd)
+--
+--     vim.defer_fn(function()
+--         vim.notify("Connecting to test debugger...")
+--         dap.run(dap.configurations.python[2])
+--     end, 500)
+-- end
+--
 -- vim.keymap.set("n", "dtn", function()
---     vim.g[runner] = test_debug_exe
---     vim.cmd("TestNearest")
+--     run_test_with_debug("TestNearest")
 -- end)
---
 -- vim.keymap.set("n", "dtc", function()
---     vim.g[runner] = test_debug_exe
---     vim.cmd("TestClass")
+--     run_test_with_debug("TestClass")
 -- end)
---
 -- vim.keymap.set("n", "dtl", function()
---     vim.g[runner] = test_debug_exe
---     vim.cmd("TestLast")
+--     run_test_with_debug("TestLast")
 -- end)
---
 -- vim.keymap.set("n", "dtf", function()
---     vim.g[runner] = test_debug_exe
---     vim.cmd("TestFile")
+--     run_test_with_debug("TestFile")
 -- end)
 --
---
--- dap.listeners.after['event terminated'] = function(_, _)
---     vim.g[runner] = test_command
+-- -- Uruchom normalnie (bez debuga)
+-- local function run_compose()
+--     vim.system({
+--         "docker",
+--         "compose",
+--         "-f",
+--         config.docker.compose_file,
+--         "up",
+--         "-d",
+--         config.docker.app,
+--     })
+--     vim.notify("Starting app...")
 -- end
 --
--- dap.listeners.after['event disconnected'] = function(_, _)
---     vim.g[runner] = test_command
+-- local function run_compose_debug()
+--     vim.notify("Starting with debugger...")
+--
+--     -- local debug_cmd = "pip show debugpy > /dev/null || pip install debugpy && "
+--     --     .. "python -Xfrozen_modules=off -m debugpy "
+--     --     .. "--listen 0.0.0.0:"
+--     --     .. config.python.debug_port
+--     --     .. " "
+--     --     .. "--wait-for-client "
+--     --     .. table.concat(config.docker.debug_entrypoint, " ")
+--     local debug_cmd = "python -Xfrozen_modules=off -m debugpy "
+--         .. "--listen 0.0.0.0:"
+--         .. config.python.debug_port
+--         .. " "
+--         .. "--wait-for-client "
+--         .. table.concat(config.docker.debug_entrypoint, " ")
+--
+--     local cmd = {
+--         "docker",
+--         "compose",
+--         "-f",
+--         config.docker.compose_file,
+--         "run",
+--         "-d",
+--         "--rm",
+--         "-p",
+--         "8000:8000",
+--         "-p",
+--         string.format("%d:%d", config.python.debug_port, config.python.debug_port),
+--         "--entrypoint=''",
+--         config.docker.app,
+--         "sh",
+--         "-c",
+--         debug_cmd,
+--     }
+--
+--     vim.system(cmd, {}, function()
+--         vim.schedule(function()
+--             vim.defer_fn(function()
+--                 vim.notify("Connecting debugger...")
+--                 dap.run(dap.configurations.python[1])
+--             end, 2000) -- Zwiększ czas bo instalacja debugpy może chwilę trwać
+--         end)
+--     end)
 -- end
 --
---
--- ENDSTANDARD
+-- vim.keymap.set("n", "<F5>", run_compose)
+-- vim.keymap.set("n", "<F6>", run_compose_debug)
     ]])
     file:close()
     load_project_config_if_exists()
     vim.notify("Config has been set")
 end
 
-vim.api.nvim_create_user_command('PConfigCreate', function()
-    local pth = vim.fn.expand('%:p') .. ".idea/projectconfig.lua"
+vim.api.nvim_create_user_command("PConfigCreate", function()
+    local pth = vim.fn.expand("%:p") .. ".idea/projectconfig.lua"
     if not file_exists(pth) then
         create_config()
     end
 end, {})
 
-vim.api.nvim_create_user_command('PConfig', function()
-    local pth = vim.fn.expand('%:p') .. ".idea/projectconfig.lua"
+vim.api.nvim_create_user_command("PConfig", function()
+    local pth = vim.fn.expand("%:p") .. ".idea/projectconfig.lua"
     if file_exists then
-        vim.cmd('e ' .. ".idea/projectconfig.lua")
+        vim.cmd("e " .. ".idea/projectconfig.lua")
     end
 end, {})
 
 load_project_config_if_exists()
 
-
-vim.keymap.set('n', '<F7>', function()
-  dofile('.idea/projectconfig.lua')
-  vim.notify("Project config reloaded!")
+vim.keymap.set("n", "<F7>", function()
+    dofile(".idea/projectconfig.lua")
+    vim.notify("Project config reloaded!")
 end, { noremap = true, silent = true })
