@@ -168,7 +168,12 @@ local plugins = {
     },
     { "windwp/nvim-ts-autotag" },
     { "mattn/emmet-vim" },
-    { "norcalli/nvim-colorizer.lua" }
+    { "norcalli/nvim-colorizer.lua" },
+    {
+        "mrcjkb/rustaceanvim",
+        version = "^6", -- Recommended
+        lazy = false, -- This plugin is already lazy
+    },
 }
 local opts = {}
 

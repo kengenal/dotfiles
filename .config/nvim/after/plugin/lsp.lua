@@ -31,4 +31,5 @@ vim.lsp.enable({
     "elixir_ls",
     "dockerls",
     "docker_compose_language_service",
+    "terraform",
 })
