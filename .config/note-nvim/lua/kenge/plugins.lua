@@ -12,11 +12,10 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-    {"RRethy/base16-nvim"},
+    { "RRethy/base16-nvim" },
     {
         "numToStr/Comment.nvim",
-        opts = {
-        },
+        opts = {},
         lazy = false,
     },
     "nvim-treesitter/nvim-treesitter",
@@ -34,11 +33,11 @@ local plugins = {
             require("nvim-surround").setup({
                 -- Configuration here, or leave empty to use defaults
             })
-        end
+        end,
     },
 
     --- LSP AND DIAGNOSTIGS
-    "williamboman/mason-lspconfig.nvim",
+    -- "williamboman/mason-lspconfig.nvim",
     "hrsh7th/cmp-nvim-lsp",
     "hrsh7th/cmp-buffer",
     "hrsh7th/cmp-path",
@@ -55,7 +54,7 @@ local plugins = {
     {
         "nvim-telescope/telescope.nvim",
         tag = "0.1.8",
-        dependencies = { "nvim-lua/plenary.nvim" }
+        dependencies = { "nvim-lua/plenary.nvim" },
     },
     { "nvim-telescope/telescope-ui-select.nvim" },
     {
@@ -100,35 +99,39 @@ local plugins = {
     },
     { "nvim-telescope/telescope-ui-select.nvim" },
     {
-        'stevearc/oil.nvim',
-        opts = {},
-        dependencies = { "nvim-tree/nvim-web-devicons" },
-        lazy = false,
-        config = function()
-            require("oil").setup({
-                default_file_explorer = false,
-                view_options = {
-                    show_hidden = true,
-                },
-            })
-        end
-    },
-    {
-      "refractalize/oil-git-status.nvim",
-
-      dependencies = {
-        "stevearc/oil.nvim",
-      },
-
-      config = true,
-    },
-    {
         "MeanderingProgrammer/render-markdown.nvim",
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },            -- if you use the mini.nvim suite
-    -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.icons' },        -- if you use standalone mini plugins
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
-    opts = {},
-    }
+        dependencies = { "nvim-treesitter/nvim-treesitter", "nvim-tree/nvim-web-devicons" }, -- if you prefer nvim-web-devicons
+        opts = {
+            completions = { lsp = { enabled = true } },
+            render_modes = { "n", "c", "t" },
+            file_types = { "markdown", "vimwiki", "markdown.vimwiki" },
+        },
+    },
+
+    {
+        "vimwiki/vimwiki",
+        init = function()
+            vim.g.vimwiki_list = {
+                {
+                    path = "~/vimwiki",
+                    syntax = "markdown",
+                    ext = ".md",
+                },
+            }
+            vim.g.vimwiki_global_ext = 0
+        end,
+        config = function()
+            vim.api.nvim_create_autocmd({ "BufEnter", "BufWinEnter" }, {
+                pattern = { "*.md" },
+                callback = function()
+                    local filepath = vim.fn.expand("%:p")
+                    if filepath:match("vimwiki") then
+                        vim.bo.filetype = "markdown" -- hybrid filetype
+                    end
+                end,
+            })
+        end,
+    },
 }
 local opts = {}
 
