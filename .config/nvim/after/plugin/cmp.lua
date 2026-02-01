@@ -1,13 +1,19 @@
 local cmp = require("cmp")
-local lspkind = require('lspkind')
-local luasnip = require('luasnip')
+local lspkind = require("lspkind")
+local luasnip = require("luasnip")
 
 require("luasnip.loaders.from_vscode").lazy_load()
 
 cmp.setup({
     window = {
-        completion = cmp.config.window.bordered(),
-        documentation = cmp.config.window.bordered(),
+        completion = cmp.config.window.bordered({
+            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+            winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel",
+        }),
+        documentation = cmp.config.window.bordered({
+            border = { "╭", "─", "╮", "│", "╯", "─", "╰", "│" },
+            winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder",
+        }),
     },
     snippet = {
         expand = function(args)
@@ -32,13 +38,13 @@ cmp.setup({
         format = lspkind.cmp_format({
             mode = "symbol_text",
             maxwidth = 50,
-            menu = ({
+            menu = {
                 buffer = "[Buffer]",
                 nvim_lsp = "[LSP]",
                 luasnip = "[Snippet]",
                 nvim_lua = "[Lua]",
                 latex_symbols = "[Latex]",
-            })
+            },
         }),
     },
     sorting = {
@@ -79,23 +85,23 @@ cmp.setup.filetype("gitcommit", {
         { name = "git" }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
     }, {
         { name = "buffer" },
-    })
+    }),
 })
 
 -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline({ "/", "?" }, {
     mapping = cmp.mapping.preset.cmdline(),
     sources = {
-        { name = "buffer" }
-    }
+        { name = "buffer" },
+    },
 })
 
 -- Use cmdline & path source for ":" (if you enabled `native_menu`, this won"t work anymore).
 cmp.setup.cmdline(":", {
     mapping = cmp.mapping.preset.cmdline(),
     sources = cmp.config.sources({
-        { name = "path" }
+        { name = "path" },
     }, {
-        { name = "cmdline" }
-    })
+        { name = "cmdline" },
+    }),
 })

@@ -28,3 +28,5 @@ vim.keymap.set("n", "<A-l>", ":vertical resize +2<CR>", { noremap = true, silent
 
 
 vim.keymap.set("x", "p", '"_dP')
+vim.cmd("cabbrev q qa")
+
