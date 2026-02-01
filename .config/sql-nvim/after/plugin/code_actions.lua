@@ -312,7 +312,9 @@ local function update_sticky(buf, win)
     end
 
     local header_line, header_idx = get_header_line(buf)
-    if not header_line then return end
+    if not header_line then
+        return
+    end
 
     local win_info = vim.fn.getwininfo(vim.fn.win_getid())[1]
     local leftcol = win_info.leftcol
@@ -325,7 +327,7 @@ local function update_sticky(buf, win)
         local target_row = math.max(header_idx + 1, cursor_row - 4)
         local visible_header = header_line:sub(leftcol + 1, leftcol + win_width)
         vim.api.nvim_buf_set_extmark(buf, ns_id, target_row, 0, {
-            virt_lines = {{ { visible_header, "Normal" } }},
+            virt_lines = { { { visible_header, "Normal" } } },
             virt_lines_above = true,
         })
     end
